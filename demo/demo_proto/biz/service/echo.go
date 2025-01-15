@@ -15,8 +15,8 @@ func NewEchoService(ctx context.Context) *EchoService {
 
 // Run create note info
 func (s *EchoService) Run(req *pbapi.Request) (resp *pbapi.Response, err error) {
-	// Finish your business logic.
-
-	return &pbapi.Response{Message: resp.Message}, nil
-
+	// 直接返回请求中的消息
+	return &pbapi.Response{
+		Message: req.Message,
+	}, nil
 }
