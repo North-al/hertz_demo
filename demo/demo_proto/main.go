@@ -1,14 +1,19 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"net"
+	"os"
 	"time"
 
+	"github.com/North-al/hertz_demo/biz/dal"
 	"github.com/North-al/hertz_demo/conf"
 	"github.com/North-al/hertz_demo/kitex_gen/pbapi/echo"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
+	"github.com/joho/godotenv"
 	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
 	consul "github.com/kitex-contrib/registry-consul"
 	"go.uber.org/zap/zapcore"
@@ -16,11 +21,19 @@ import (
 )
 
 func main() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	fmt.Printf("env %v\n", os.Getenv("MYSQL_USER"))
+	dal.Init()
+
 	opts := kitexInit()
 
 	svr := echo.NewServer(new(EchoImpl), opts...)
 
-	err := svr.Run()
+	err = svr.Run()
 	if err != nil {
 		klog.Error(err.Error())
 	}
