@@ -2,25 +2,26 @@ version: '3.8'
 
 volumes:
   mysql_data:
+  redis_data:
+
 
 services:
   app:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
     env_file:
-        # Ensure that the variables in .env match the same variables in devcontainer.json
-        - .env
+      # Ensure that the variables in .env match the same variables in devcontainer.json
+      - .env
 
     volumes:
       - ../..:/workspaces:cached
-      
+
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
     network_mode: service:mysql
-
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
@@ -36,3 +37,10 @@ services:
       MYSQL_PASSWORD: 123456
       MYSQL_DATABASE: mall
       TZ: Asia/Shanghai
+
+  redis:
+    image: redis:latest
+    ports:
+      - 6300:6379
+    volumes:
+      - redis_data:/data

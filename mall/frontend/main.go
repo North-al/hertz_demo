@@ -19,6 +19,8 @@ import (
 	"github.com/hertz-contrib/logger/accesslog"
 	hertzlogrus "github.com/hertz-contrib/logger/logrus"
 	"github.com/hertz-contrib/pprof"
+	"github.com/hertz-contrib/sessions"
+	"github.com/hertz-contrib/sessions/redis"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
@@ -28,8 +30,6 @@ func main() {
 	// dal.Init()
 	address := conf.GetConf().Hertz.Address
 	h := server.New(server.WithHostPorts(address))
-	h.LoadHTMLGlob("template/*")
-	h.Static("/static", "./")
 
 	registerMiddleware(h)
 
@@ -38,12 +38,22 @@ func main() {
 		ctx.JSON(consts.StatusOK, utils.H{"ping": "pong"})
 	})
 
+	h.LoadHTMLGlob("template/*")
+	h.Static("/static", "./")
+
+	h.GET("/sign-in", func(c context.Context, ctx *app.RequestContext) {
+		ctx.HTML(consts.StatusOK, "sign-in.tmpl", nil)
+	})
+
 	router.GeneratedRegister(h)
 
 	h.Spin()
 }
 
 func registerMiddleware(h *server.Hertz) {
+	store, _ := redis.NewStore(10, "tcp", conf.GetConf().Redis.Address, "", []byte("secret"))
+	h.Use(sessions.New("northal-shop", store))
+
 	// log
 	logger := hertzlogrus.NewLogger()
 	hlog.SetLogger(logger)

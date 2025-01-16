@@ -4,6 +4,8 @@ FROM mcr.microsoft.com/devcontainers/go:1-1.23-bookworm
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
 
+RUN apt update && apt install -y protobuf-compiler
+
 # [Optional] Uncomment the next lines to use go get to install anything else you need
 # USER vscode
 # RUN go get -x <your-dependency-or-tool>
