@@ -27,6 +27,7 @@ func (h *SignInService) Run(req *auth.LoginRequest) (resp *common.Empty, err err
 	// todo edit your code
 
 	session := sessions.Default(h.RequestContext)
+	fmt.Println("session", session)
 	session.Set("user_id", 1)
 	session.Save()
 	fmt.Println("session", session.Get("user_id"))

@@ -51,8 +51,11 @@ func main() {
 }
 
 func registerMiddleware(h *server.Hertz) {
-	store, _ := redis.NewStore(10, "tcp", conf.GetConf().Redis.Address, "", []byte("secret"))
+	store, err := redis.NewStore(10, "tcp", conf.GetConf().Redis.Address, "", []byte("secret"))
 	h.Use(sessions.New("northal-shop", store))
+	if err != nil {
+		panic(err)
+	}
 
 	// log
 	logger := hertzlogrus.NewLogger()
