@@ -20,7 +20,8 @@
 				"ms-azuretools.vscode-docker",
 				"IgorSbitnev.error-gutters",
 				"peterj.proto",
-				"ms-vscode.makefile-tools"
+				"ms-vscode.makefile-tools",
+				"tamasfe.even-better-toml"
 			]
         }
     },

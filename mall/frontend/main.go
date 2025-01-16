@@ -29,6 +29,7 @@ func main() {
 	address := conf.GetConf().Hertz.Address
 	h := server.New(server.WithHostPorts(address))
 	h.LoadHTMLGlob("template/*")
+	h.Static("/static", "./")
 
 	registerMiddleware(h)
 
