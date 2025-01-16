@@ -16,11 +16,40 @@ func NewHomeService(Context context.Context, RequestContext *app.RequestContext)
 	return &HomeService{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *HomeService) Run(req *home.Empty) (resp *home.Empty, err error) {
+func (h *HomeService) Run(req *home.Empty) (resp []map[string]interface{}, err error) {
 	//defer func() {
 	// hlog.CtxInfof(h.Context, "req = %+v", req)
 	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
 	//}()
 	// todo edit your code
-	return
+
+	resp = []map[string]interface{}{
+		{
+			"title":   "T-shirt",
+			"price":   100,
+			"picture": "/static/images/t-shirt.webp",
+		},
+		{
+			"title":   "Short sleeve",
+			"price":   120,
+			"picture": "/static/images/t-shirt.webp",
+		},
+		{
+			"title":   "Long sleeve",
+			"price":   150,
+			"picture": "/static/images/t-shirt.webp",
+		},
+		{
+			"title":   "Hoodie",
+			"price":   180,
+			"picture": "/static/images/t-shirt.webp",
+		},
+		{
+			"title":   "avatar",
+			"price":   10,
+			"picture": "/static/images/avatar.jpg",
+		},
+	}
+
+	return resp, nil
 }

@@ -3,7 +3,6 @@ testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
-  watch_dir = [".", "template"]
   args_bin = []
   bin = "./tmp/main"
   cmd = "go build -o ./tmp/main ."
