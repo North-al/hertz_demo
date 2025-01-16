@@ -17,3 +17,8 @@ func SendSuccessResponse(ctx context.Context, c *app.RequestContext, code int, d
 	// todo edit custom code
 	c.JSON(code, data)
 }
+
+func WrapResponse(ctx context.Context, c *app.RequestContext, data map[string]interface{}) map[string]interface{} {
+	data["user_id"] = 1
+	return data
+}

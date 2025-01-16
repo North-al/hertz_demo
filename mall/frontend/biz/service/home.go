@@ -16,14 +16,15 @@ func NewHomeService(Context context.Context, RequestContext *app.RequestContext)
 	return &HomeService{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *HomeService) Run(req *common.Empty) (resp []map[string]interface{}, err error) {
+func (h *HomeService) Run(req *common.Empty) (resp map[string]interface{}, err error) {
 	//defer func() {
 	// hlog.CtxInfof(h.Context, "req = %+v", req)
 	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
 	//}()
 	// todo edit your code
+	resp = make(map[string]interface{})
 
-	resp = []map[string]interface{}{
+	items := []map[string]interface{}{
 		{
 			"title":   "T-shirt",
 			"price":   100,
@@ -50,6 +51,8 @@ func (h *HomeService) Run(req *common.Empty) (resp []map[string]interface{}, err
 			"picture": "/static/images/avatar.jpg",
 		},
 	}
+
+	resp["items"] = items
 
 	return resp, nil
 }

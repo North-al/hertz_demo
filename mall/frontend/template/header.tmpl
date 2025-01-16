@@ -33,9 +33,17 @@
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
+            {{ if not .user_id }}
             <div class="ms-1">
                 <a href="/sign-in" class="btn btn-primary">Sign in</a>
             </div>
+            {{ else }}
+            <!-- 用户头像 -->
+            <div class="ms-1">
+                <img src="/static/images/avatar.jpg" alt="用户头像" class="rounded-circle"
+                    style="width: 30px; height: 30px;" />
+            </div>
+            {{ end }}
         </div>
     </div>
 </nav>
