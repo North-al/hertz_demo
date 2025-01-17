@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/North-al/hertz_demo/mall/frontend/biz/service"
 	"github.com/North-al/hertz_demo/mall/frontend/biz/utils"
@@ -23,14 +24,15 @@ func SignIn(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// resp := &common.Empty{}
-	_, err = service.NewSignInService(ctx, c).Run(&req)
+	redirectUrl, err := service.NewSignInService(ctx, c).Run(&req)
+	fmt.Println("redirectUrl", redirectUrl)
 	if err != nil {
 		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
 		return
 	}
 
 	// utils.SendSuccessResponse(ctx, c, consts.StatusOK, "111")
-	c.Redirect(consts.StatusOK, []byte("/"))
+	c.Redirect(consts.StatusOK, []byte(redirectUrl))
 }
 
 // SignUp .

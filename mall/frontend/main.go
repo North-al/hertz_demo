@@ -8,6 +8,7 @@ import (
 
 	"github.com/North-al/hertz_demo/mall/frontend/biz/router"
 	"github.com/North-al/hertz_demo/mall/frontend/conf"
+	"github.com/North-al/hertz_demo/mall/frontend/middleware"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -41,8 +42,17 @@ func main() {
 	h.LoadHTMLGlob("template/*")
 	h.Static("/static", "./")
 
+	h.GET("/about", middleware.Auth, func(c context.Context, ctx *app.RequestContext) {
+		ctx.HTML(consts.StatusOK, "about.tmpl", nil)
+	})
+
 	h.GET("/sign-in", func(c context.Context, ctx *app.RequestContext) {
-		ctx.HTML(consts.StatusOK, "sign-in.tmpl", nil)
+
+		data := utils.H{
+			"Next": ctx.Query("next"),
+		}
+
+		ctx.HTML(consts.StatusOK, "sign-in.tmpl", data)
 	})
 
 	h.GET("/sign-up", func(c context.Context, ctx *app.RequestContext) {
@@ -99,4 +109,6 @@ func registerMiddleware(h *server.Hertz) {
 
 	// cores
 	h.Use(cors.Default())
+
+	h.Use(middleware.AuthMiddleware())
 }

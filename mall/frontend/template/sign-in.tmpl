@@ -11,7 +11,7 @@
 
 <body>
     <div class="w-50 mt-5 mx-auto">
-        <form action="/auth/sign-in" method="post">
+        <form action="/auth/sign-in?next={{ .Next }}" method="post">
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
                 <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
