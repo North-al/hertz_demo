@@ -6,6 +6,7 @@ import (
 	"github.com/North-al/hertz_demo/mall/frontend/biz/service"
 	"github.com/North-al/hertz_demo/mall/frontend/biz/utils"
 	auth "github.com/North-al/hertz_demo/mall/frontend/hertz_gen/frontend/auth"
+	common "github.com/North-al/hertz_demo/mall/frontend/hertz_gen/frontend/common"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
@@ -30,4 +31,48 @@ func SignIn(ctx context.Context, c *app.RequestContext) {
 
 	// utils.SendSuccessResponse(ctx, c, consts.StatusOK, "111")
 	c.Redirect(consts.StatusOK, []byte("/"))
+}
+
+// SignUp .
+// @router /auth/sign-up [POST]
+func SignUp(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req auth.RegisterRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
+		return
+	}
+
+	_, err = service.NewSignUpService(ctx, c).Run(&req)
+
+	if err != nil {
+		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
+		return
+	}
+	// utils.SendSuccessResponse(ctx, c, consts.StatusOK, "000")
+
+	c.Redirect(consts.StatusOK, []byte("/sign-in"))
+}
+
+// SignOut .
+// @router /auth/sign-out [GET]
+func SignOut(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req common.Empty
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
+		return
+	}
+
+	_, err = service.NewSignOutService(ctx, c).Run(&req)
+
+	if err != nil {
+		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
+		return
+	}
+
+	c.Redirect(consts.StatusOK, []byte("/"))
+	// utils.SendSuccessResponse(ctx, c, consts.StatusOK, resp)
 }

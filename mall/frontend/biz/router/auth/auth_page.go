@@ -20,5 +20,7 @@ func Register(r *server.Hertz) {
 	{
 		_auth := root.Group("/auth", _authMw()...)
 		_auth.POST("/sign-in", append(_signinMw(), auth.SignIn)...)
+		_auth.GET("/sign-out", append(_signoutMw(), auth.SignOut)...)
+		_auth.POST("/sign-up", append(_signupMw(), auth.SignUp)...)
 	}
 }

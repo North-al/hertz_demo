@@ -12,9 +12,23 @@ message LoginRequest {
     string password = 2 [(api.form) = "password"];
 }
 
+message RegisterRequest {
+    string email = 1 [(api.form) = "email"];
+    string password = 2 [(api.form) = "password"];
+    string password_confirm = 3 [(api.form) = "password_confirm"];
+}
+
 service AuthPageService {
    rpc SignIn(LoginRequest) returns(common.Empty) {
       option (api.post) = "/auth/sign-in";
    }
+
+    rpc SignUp(RegisterRequest) returns(common.Empty) {
+      option (api.post) = "/auth/sign-up";
+    }
+
+    rpc SignOut(common.Empty) returns(common.Empty) {
+      option (api.get) = "/auth/sign-out";
+    }
 }
 

@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 
 	auth "github.com/North-al/hertz_demo/mall/frontend/hertz_gen/frontend/auth"
 	common "github.com/North-al/hertz_demo/mall/frontend/hertz_gen/frontend/common"
@@ -25,10 +24,13 @@ func (h *SignInService) Run(req *auth.LoginRequest) (resp *common.Empty, err err
 	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
 	//}()
 	// todo edit your code
+	// 登录
 
 	session := sessions.Default(h.RequestContext)
 	session.Set("user_id", 1)
-	session.Save()
-	fmt.Println("session", session.Get("user_id"))
+	err = session.Save()
+	if err != nil {
+		return nil, err
+	}
 	return
 }

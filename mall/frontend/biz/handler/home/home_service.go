@@ -31,7 +31,7 @@ func Home(ctx context.Context, c *app.RequestContext) {
 
 	// utils.SendSuccessResponse(ctx, c, consts.StatusOK, resp)
 
-	resp["user_id"] = 1
+	// resp["user_id"] = 1
 
 	c.HTML(consts.StatusOK, "home.tmpl", utils.WrapResponse(ctx, c, resp))
 

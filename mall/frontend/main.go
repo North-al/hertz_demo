@@ -45,6 +45,10 @@ func main() {
 		ctx.HTML(consts.StatusOK, "sign-in.tmpl", nil)
 	})
 
+	h.GET("/sign-up", func(c context.Context, ctx *app.RequestContext) {
+		ctx.HTML(consts.StatusOK, "sign-up.tmpl", nil)
+	})
+
 	router.GeneratedRegister(h)
 
 	h.Spin()
